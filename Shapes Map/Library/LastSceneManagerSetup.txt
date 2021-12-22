@@ -1,5 +1,9 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/loding.unity
+=======
+- path: Assets/Scenes/Triangle.unity
+>>>>>>> 5a9d7c7d08a6efb267679c1acb46c825b05735d2
   isLoaded: 1
   isActive: 1
   isSubScene: 0

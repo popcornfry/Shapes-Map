@@ -16,11 +16,11 @@ public class BulletLauncher : MonoBehaviour
     public int add;
     
     [Space]
-
+    public GameObject[] bulletArray;
     public GameObject[] points;
 
     private GameObject bulletPrefab;
-    private int bulletCount;
+    private static int bulletCount;
     private float curTime;
     private float delay;
 
@@ -30,9 +30,16 @@ public class BulletLauncher : MonoBehaviour
     private ClosedInteger closedInteger = new ClosedInteger(-3, 3);
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        bulletCount = 0;
         bulletPrefab = Resources.Load<GameObject>("Bullet/Bullet");
+
+        for (int i = 0; i < bulletArray.Length; ++i)
+        {
+            bulletArray[i] = Instantiate(bulletPrefab);
+            bulletArray[i].transform.position = Vector3.back * 10;
+        }
 
         // GameObject bullet = Instantiate(Bullet);
         // bullet.transform.position = points[0].transform.position;
@@ -68,6 +75,10 @@ public class BulletLauncher : MonoBehaviour
 
             delay = Random.Range(minDelay, maxDelay) + curTime;
         }
+        // else
+        // {
+        //     delay = Random.Range(minDelay, maxDelay) + curTime;
+        // }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -104,7 +115,7 @@ public class BulletLauncher : MonoBehaviour
 
     private void bulletShoot(Vector3 startPos, Vector3 targetPos, float speed)
     {
-        Bullet temp = Instantiate(bulletPrefab).GetComponent<Bullet>();
+        Bullet temp = bulletArray[bulletCount = ++bulletCount % bulletArray.Length].GetComponent<Bullet>();
         temp.transform.position = startPos;
         temp.targetVactor = targetPos;
         temp.Speed = speed;
@@ -159,7 +170,7 @@ public class BulletLauncher : MonoBehaviour
         // }
     }
 
-    public int BulletCount
+    public static int BulletCount
     {
         get
         {

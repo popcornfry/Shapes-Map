@@ -15,6 +15,14 @@ public class Bullet : MonoBehaviour
         GetComponent<Rigidbody2D>().MovePosition(transform.position + (dir * speed));
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.name == "Map")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public Vector3 targetVactor
     {
         set
